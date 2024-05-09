@@ -21,6 +21,10 @@ for i in range(max_guesses):
             print("Incorrect, better luck next time!")
             print(f"The correct answer : {random_number}")
         else:
+            if guess > random_number:
+                print("Try lower")
+            else:
+                print("Try higher")
             print(f"Nope, you have {max_guesses-i-1} chances left")
     
     
