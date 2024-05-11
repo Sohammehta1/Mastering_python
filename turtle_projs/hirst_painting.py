@@ -10,12 +10,40 @@ color_pallete = cg.extract('turtle_projs/Damien-Hirsts-Spot-Painting-1986.jpg',5
 colors =[]
 for c in color_pallete:
     colors.append(c.rgb)
-print(colors)
+#print(colors)
+
 
 red = tt.Turtle()
-red.pencolor(pickThreeColors(colors))
-red.width(10)
 
-red.circle(100)
+red.penup()
+red.setpos(-200,-100)
+red.pendown()
+
+row_count = 10
+column_count = 10
+right = True
+for _ in range(row_count):
+    for __ in range(column_count-1):
+        red.pencolor(pickThreeColors(colors))
+        red.pendown()
+        red.dot(20)
+        red.penup()
+        red.forward(50)
+    red.pen(pickThreeColors(colors))
+    red.dot(20)
+
+    if right:
+        red.left(90)
+        red.forward(50)
+        red.left(90)
+        right = False
+    else:
+        red.right(90)
+        red.forward(50)
+        red.right(90)
+        right= True
+    
+
+
 
 red.screen.mainloop()
