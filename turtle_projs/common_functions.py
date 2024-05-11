@@ -3,9 +3,9 @@ from turtle import colormode
 
 colormode(cmode=255)
 
-def pickThreeColors(colors:tuple):
+def pickThreeColors(colors=None):
     rd = random.Random()
-    if len(colors)==0:
+    if  colors is None or len(colors)==0:
         
         tp = []
         for i in range(3):
