@@ -10,7 +10,7 @@ color_pallete = cg.extract('turtle_projs/Damien-Hirsts-Spot-Painting-1986.jpg',5
 colors =[]
 for c in color_pallete:
     colors.append(c.rgb)
-#print(colors)
+print(colors)
 
 
 red = tt.Turtle()
