@@ -1,39 +1,71 @@
 from turtle import Turtle,Screen
 from scoreboard import Scoreboard
+from paddle import Paddle
+from threading import Thread
 
-def DrawDashedLine(turtle:Turtle):
-    turtle.color("white")
-    turtle.speed(0)
-    turtle.hideturtle()
-    turtle.penup()
-    turtle.goto(0,300)
-    turtle.pendown()
-    turtle.pensize(10)
+class PlayGame():
+    def __init__(self) -> None:
+        pass
 
-    
-    turtle.setheading(270)
-    blank = False
-    while turtle.distance(0,-300) >10:
-        if not blank:
-            turtle.pendown()
-        else:
-            turtle.penup()
-        blank = not blank   
-        turtle.forward(20)
+    def DrawDashedLine(self):
+        t = Turtle()
+        t.color("white")
+        t.speed(0)
+        t.hideturtle()
+        t.penup()
+        t.goto(0,300)
+        t.pendown()
+        t.pensize(10)
+
+        
+        t.setheading(270)
+        blank = False
+        while t.distance(0,-300) >10:
+            if not blank:
+                t.pendown()
+            else:
+                t.penup()
+            blank = not blank   
+            t.forward(20)
         
         
-
-def playPong():
-    sc = Screen()
-    sc.setup(height=600,width=800)
-    sc.bgcolor("black")
-    t = Turtle()
-    DrawDashedLine(t)
-    score_left = Scoreboard((-30,260))
-    score_right = Scoreboard((30,260))
     
-    sc.mainloop()
+
+    def playPong(self):
+        sc = Screen()
+        sc.setup(height=600,width=800)
+        sc.bgcolor("black")
+        
+        self.DrawDashedLine()
+        score_left = Scoreboard((-30,260))
+        score_right = Scoreboard((30,260))
+        left_paddle = Paddle(is_left=True)
+        right_paddle = Paddle()
+        sc.listen()
+        def thread_left():
+            sc.onkeypress(fun=left_paddle.up,key='w')
+            sc.onkeypress(fun=left_paddle.down,key='s')  
+
+        def thread_right():
+            sc.onkeypress(fun=right_paddle.up,key="Up")
+            sc.onkeypress(fun=right_paddle.down,key="Down" )   
+
+        th1 = Thread(target=thread_left())
+        th2 = Thread(target=thread_right())
+        th1.start()
+        th2.start()
+        # sc.onkeypress(fun=left_paddle.up,key='w')
+        # sc.onkeypress(fun=left_paddle.down,key='s')
+        # sc.onkeypress(fun=right_paddle.up,key="Up")
+        # sc.onkeypress(fun=right_paddle.down,key="Down" )
+        # while True:
+        #     left_paddle.move()
+        #     if left_paddle.gameOver():
+        #         break
+
+        sc.mainloop()
     
 
 if __name__ == "__main__":
-    playPong()
+  pong = PlayGame()
+  pong.playPong()
