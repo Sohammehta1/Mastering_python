@@ -2,9 +2,11 @@ from turtle import Turtle,Screen
 from scoreboard import Scoreboard
 from paddle import Paddle
 from threading import Thread
+from pongBall import Ball
 
 class PlayGame():
     def __init__(self) -> None:
+        self.playing = False
         pass
 
     def DrawDashedLine(self):
@@ -15,7 +17,7 @@ class PlayGame():
         t.penup()
         t.goto(0,300)
         t.pendown()
-        t.pensize(10)
+        t.pensize(7)
 
         
         t.setheading(270)
@@ -41,28 +43,57 @@ class PlayGame():
         score_right = Scoreboard((30,260))
         left_paddle = Paddle(is_left=True)
         right_paddle = Paddle()
+        b = Ball()
         sc.listen()
-        def thread_left():
-            sc.onkeypress(fun=left_paddle.up,key='w')
-            sc.onkeypress(fun=left_paddle.down,key='s')  
+        # def thread_left():
+        #     sc.onkeypress(fun=left_paddle.up,key='w')
+        #     sc.onkeypress(fun=left_paddle.down,key='s')  
 
-        def thread_right():
-            sc.onkeypress(fun=right_paddle.up,key="Up")
-            sc.onkeypress(fun=right_paddle.down,key="Down" )   
+        # def thread_right():
+        #     sc.onkeypress(fun=right_paddle.up,key="Up")
+        #     sc.onkeypress(fun=right_paddle.down,key="Down" )   
 
-        th1 = Thread(target=thread_left())
-        th2 = Thread(target=thread_right())
-        th1.start()
-        th2.start()
-        # sc.onkeypress(fun=left_paddle.up,key='w')
-        # sc.onkeypress(fun=left_paddle.down,key='s')
-        # sc.onkeypress(fun=right_paddle.up,key="Up")
-        # sc.onkeypress(fun=right_paddle.down,key="Down" )
-        # while True:
-        #     left_paddle.move()
-        #     if left_paddle.gameOver():
-        #         break
+        # th1 = Thread(target=thread_left())
+        # th2 = Thread(target=thread_right())
+        # th1.start()
+        # th2.start()
+        
+        def play():
+            if not self.playing:
+                self.playing = True
+                
+                while True:
+                    sc.update()
+                    left_paddle.move()
+                    right_paddle.move()
+                    b.move()
+                    if b.isGameOver(left_paddle,right_paddle):
+                        if b.gameOver: # This round is over, now we will update the scoreboard and reset position
+                            x,y = b.pos()
+                            if x < 0:
+                                score_right.updateScore()
+                            else:
+                                score_left.updateScore()
+                            # Now we need to reset the positions
+                            left_paddle.reset()
+                            right_paddle.reset()
+                            b.reset()
+                            self.playing = False
+                            return
+                    
+                    if left_paddle.gameOver():
+                        self.playing = False
+                        return 
+            else:
+                return
 
+        sc.onkeypress(fun=left_paddle.up,key='w')
+        sc.onkeypress(fun=left_paddle.down,key='s')
+        sc.onkeypress(fun=right_paddle.up,key="Up")
+        sc.onkeypress(fun=right_paddle.down,key="Down" )
+        sc.onkeypress(fun=play,key="space")
+       
+        
         sc.mainloop()
     
 

@@ -10,7 +10,7 @@ class Scoreboard(Turtle):
         self.speed(0)
         self.setpos(position)
         self.write(f"{self.score}",align="center",font=("Arial", 30, "normal"))
-        print("hey")
+        # print("hey")
 
 
     def updateScore(self):

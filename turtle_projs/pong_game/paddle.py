@@ -7,8 +7,9 @@ class Paddle(Turtle):
         
        
         self.color("white")
-        self.speed(10)
+        self.speed(0)
         self.penup()
+        self.isLeft = is_left
         if is_left:
             self.goto(-380,0)
         else:
@@ -20,7 +21,7 @@ class Paddle(Turtle):
         self.shape('square')
         self.shapesize(stretch_wid=1,stretch_len=3)
         self.setheading(90)
-        self.distance = 20
+        self.distance = 50
         
         
 
@@ -41,5 +42,12 @@ class Paddle(Turtle):
     def gameOver(self):
         x,y = self.pos()
         return y>=300 or y <=-300
+
+    def reset(self):
+        if self.isLeft:
+            self.goto(-380,0)
+        else:
+            self.goto(380,0)
+
     
     
