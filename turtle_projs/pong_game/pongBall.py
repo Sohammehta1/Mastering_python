@@ -12,11 +12,11 @@ class Ball(Turtle):
         self.speed(0)
         self.gameOver = False
         
-        self.setheading(random.choice([0,180]))
+        self.setheading((random.choice([-1,1]))*random.randint(0,180))
 
 
     def move(self):
-        self.forward(6)
+        self.forward(3)
 
     def bounce(self):
         self.left(random.randint(0,30))
@@ -34,6 +34,6 @@ class Ball(Turtle):
             
     def reset(self):
         self.goto(0,0)
-        self.setheading(random.choice([0,180]))
+        self.setheading((random.choice([-1,1]))*random.randint(0,180))
 
         
