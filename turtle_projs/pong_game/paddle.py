@@ -7,7 +7,7 @@ class Paddle(Turtle):
         
        
         self.color("white")
-        self.speed(0)
+        self.speed(10)
         self.penup()
         self.isLeft = is_left
         if is_left:
@@ -19,9 +19,8 @@ class Paddle(Turtle):
         # Register the rectangle shape
         # self.sc.register_shape('rectangle', rect_coords)
         self.shape('square')
-        self.shapesize(stretch_wid=1,stretch_len=3)
-        self.setheading(90)
-        self.distance = 50
+        self.shapesize(stretch_wid=5,stretch_len=1)
+        self.distance = 20
         
         
 
@@ -33,10 +32,14 @@ class Paddle(Turtle):
             self.forward(self.distance)
     
     def up(self): 
-        self.forward(self.distance)
+        y = self.ycor()
+        if y < 300: 
+            self.goto(self.xcor(),y+20)
     
     def down(self):
-        self.forward(-self.distance)
+        y = self.ycor()
+        if y  - 300: 
+            self.goto(self.xcor(),y-20)
         
 
     def gameOver(self):

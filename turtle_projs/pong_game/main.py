@@ -37,13 +37,14 @@ class PlayGame():
         sc = Screen()
         sc.setup(height=600,width=800)
         sc.bgcolor("black")
-        
+        sc.tracer(0)
         self.DrawDashedLine()
         score_left = Scoreboard((-30,260))
         score_right = Scoreboard((30,260))
         left_paddle = Paddle(is_left=True)
         right_paddle = Paddle()
         b = Ball()
+        sc.tracer(1)
         sc.listen()
         # def thread_left():
         #     sc.onkeypress(fun=left_paddle.up,key='w')
@@ -69,7 +70,7 @@ class PlayGame():
                     b.move()
                     if b.isGameOver(left_paddle,right_paddle):
                         if b.gameOver: # This round is over, now we will update the scoreboard and reset position
-                            x,y = b.pos()
+                            x = b.xcor()
                             if x < 0:
                                 score_right.updateScore()
                             else:
