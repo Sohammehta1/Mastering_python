@@ -2,7 +2,8 @@ from turtle import Turtle,Screen
 from scoreboard import Scoreboard
 from paddle import Paddle
 from threading import Thread
-from pongBall import Ball
+from pongBall import *
+import time
 
 class PlayGame():
     def __init__(self) -> None:
@@ -22,7 +23,7 @@ class PlayGame():
         
         t.setheading(270)
         blank = False
-        while t.distance(0,-300) >10:
+        while t.distance(0,-300) >=1:
             if not blank:
                 t.pendown()
             else:
@@ -58,33 +59,35 @@ class PlayGame():
         # th2 = Thread(target=thread_right())
         # th1.start()
         # th2.start()
+        def reset():
+            b.reset()
+            left_paddle.reset()
+            right_paddle.reset()
+            self.playing  =False
         
         def play():
             if not self.playing:
                 self.playing = True
                 
                 while True:
+                    if self.playing == False:
+                        return
                     sc.update()
-                    left_paddle.move()
-                    right_paddle.move()
+                    # left_paddle.move()
+                    # right_paddle.move()
                     b.move()
-                    if b.isGameOver(left_paddle,right_paddle):
-                        if b.gameOver: # This round is over, now we will update the scoreboard and reset position
-                            x = b.xcor()
-                            if x < 0:
-                                score_right.updateScore()
-                            else:
-                                score_left.updateScore()
-                            # Now we need to reset the positions
-                            left_paddle.reset()
-                            right_paddle.reset()
-                            b.reset()
-                            self.playing = False
-                            return
+                    w= b.bounce(left_paddle, right_paddle)
+                    if b.gameOver ==True:    
+                        left_paddle.reset()
+                        right_paddle.reset()
+                        b.reset() 
+                        if w =="r":
+                            score_right.updateScore()
+                        else:
+                            score_left.updateScore()
+                        self.playing = False    
                     
-                    if left_paddle.gameOver():
-                        self.playing = False
-                        return 
+                    
             else:
                 return
 
@@ -93,6 +96,7 @@ class PlayGame():
         sc.onkeypress(fun=right_paddle.up,key="Up")
         sc.onkeypress(fun=right_paddle.down,key="Down" )
         sc.onkeypress(fun=play,key="space")
+        sc.onkeypress(fun=reset, key= "r")
        
         
         sc.mainloop()
