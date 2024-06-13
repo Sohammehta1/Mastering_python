@@ -117,10 +117,11 @@ def rename_file(fileName, newName):
     if fileName not in indices:
         print("File not found in the aggregator.")
         return
+    loc = ''
     if indices[fileName]['ref']==True:
         temp = indices[fileName]['fpath'].split('/')
         temp[-1] = newName
-        loc = '/'.join(temp)
+        loc += '/'.join(temp)
         os.rename(indices[fileName]['fpath'],loc)
     indices[newName] = indices.pop(fileName)
     indices[newName]['fpath'] = loc

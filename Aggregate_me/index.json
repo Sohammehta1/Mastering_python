@@ -1,8 +1,14 @@
 {
-    "renamed_chatgpt.py": {
+    "cut_meta.txt": {
         "start": 0,
-        "fsize": 4959,
-        "fpath": "/home/soham/renamed_chatgpt.py",
+        "fsize": 63,
+        "fpath": "cut_meta.txt",
+        "ref": false
+    },
+    "run_script.sh": {
+        "start": 63,
+        "fsize": 339,
+        "fpath": "/home/soham/run_script.sh",
         "ref": true
     }
 }
